@@ -7,15 +7,30 @@ export const blogRoute = new Hono<{
     Bindings: {
       DATABASE_URL: string,
       JWT_TOKEN: string
+    },
+    Variables:{
+        userId: string;
     }
 }>()
 
 //Middleware
-// blogRoute.use("./*", (c,next)=>{
-//     //Extract the userId
-//     //Pass down to the route handler 
-//     next();
-// })
+blogRoute.use("./*",async (c,next)=>{
+    //Extract the userId
+    //Pass down to the route handler 
+    const authHeader = c.req.header("authorization") || ""; //get the authorization header from user.
+    const user = await verify(authHeader,c.env.JWT_TOKEN); // check if the token send by user is correct.
+
+    if(user){
+        c.set("userId",user.id);
+        next();
+    }else{
+        c.status(403);
+        return c.json({
+            message: "You are not logged in"
+        })
+    }
+    
+})
 
 
 blogRoute.post('/', async (c) => {
@@ -24,13 +39,14 @@ blogRoute.post('/', async (c) => {
     }).$extends(withAccelerate())
     
     const body = await c.req.json();
+    const authorId = c.get("userId");
 
     try{
         const blog = await prisma.blog.create({
             data:{
                 title: body.title,
                 content: body.content,
-                authorId: '9b5fdd84-2f4a-4b7b-9b42-4a611d09ec3a'
+                authorId: authorId
             }
         })
           
@@ -113,5 +129,8 @@ blogRoute.get('/bulk',async (c) => {
             blogs
         })
         
+    }catch(e){
+        c.status(411);
+        return c.text("Error while getting all the blog posts");
     }
 })
