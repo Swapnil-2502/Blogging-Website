@@ -56,5 +56,8 @@ userRoute.post('/signin', async (c) => {
     }
 
     const jwt = await sign({ id: user.id }, c.env.JWT_TOKEN);
-    return c.json({ jwt });
+    return c.json({ 
+      jwt,
+      message: "You are sucessfully logged in"
+     });
 })

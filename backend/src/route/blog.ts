@@ -22,17 +22,25 @@ blogRoute.use("/*",async (c,next)=>{
     //Extract the userId
     //Pass down to the route handler 
     const authHeader = c.req.header("Authorization") || ""; //get the authorization header from user.
-    const user = await verify(authHeader,c.env.JWT_TOKEN); // check if the token send by user is correct.
+    try {
+        const user = await verify(authHeader,c.env.JWT_TOKEN); // check if the token send by user is correct.
    
-    if(user){
-        c.set("userId",user.id); 
-        await next();
-    }else{
+        if(user){
+            c.set("userId",user.id); 
+            await next();
+        }else{
+            c.status(403);
+            return c.json({
+                message: "You are not logged in"
+            })
+        }
+    } catch (e) {
         c.status(403);
         return c.json({
             message: "You are not logged in"
         })
     }
+    
     
 })
 
@@ -80,7 +88,7 @@ blogRoute.put('/', async (c) => {
             },
             data:{
                 title: body.title,
-                content: body.content,
+                content: body.content
             }
         })
 
@@ -90,7 +98,7 @@ blogRoute.put('/', async (c) => {
         })
     }catch(e){
         c.status(411);
-        return c.text("Error while posting the blog");
+        return c.text("Error while updating the blog");
     }
 
 })
@@ -118,7 +126,6 @@ blogRoute.get('/bulk',async (c) => {
 
 blogRoute.get('/:id', async (c) => {
     const id = c.req.param('id');
-    console.log(id);
 
     const prisma = new PrismaClient({
         datasourceUrl: c.env.DATABASE_URL,
@@ -131,11 +138,11 @@ blogRoute.get('/:id', async (c) => {
             } 
         })
         return c.json({
-            blog
+            blog,
         });
 
     }catch(e){
         c.status(411);
-        return c.text("Error while getting the blog post with the given id");
+        return c.text(`Error while getting the blog post with the given ${id}`);
     }
 })
