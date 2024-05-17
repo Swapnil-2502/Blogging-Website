@@ -33,4 +33,3 @@ export const updateBlogInput = z.object({
 
 //Type Inference in zod
 export type UpdateBlogInput = z.infer<typeof updateBlogInput>
-
