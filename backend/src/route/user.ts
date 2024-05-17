@@ -23,7 +23,7 @@ userRoute.post('/signup',async (c) => {
     if(!success){
       c.status(411);
       return c.json({
-        message :"Inputs are not correct"
+        message :"Inputs are not correct for SIGNIN"
       })
     }
   
@@ -57,7 +57,7 @@ userRoute.post('/signin', async (c) => {
     if(!success){
       c.status(411);
       return c.json({
-        message :"Inputs are not correct"
+        message :"Inputs are not correct SINGUP"
       })
     }
 

@@ -53,7 +53,7 @@ blogRoute.post('/', async (c) => {
     if(!success){
       c.status(411);
       return c.json({
-        message :"Inputs are not correct"
+        message :"Inputs are not correct CREATE BLOG"
       })
     }
 
@@ -95,7 +95,7 @@ blogRoute.put('/', async (c) => {
     if(!success){
       c.status(411);
       return c.json({
-        message :"Inputs are not correct"
+        message :"Inputs are not correct UPDATE BLOG"
       })
     }
 
