@@ -1,14 +1,29 @@
 import { ChangeEvent, useState } from "react";
-import {Link} from "react-router-dom"
+import {Link, Navigate, useNavigate} from "react-router-dom"
 import { SignupInput } from "@swapnil25/medium-common"
+import axios from "axios";
+import { BACKEND_URL } from "../config";
 
 export const Auth = ({type}: {type: "signup" | "signin"}) => {
-    
+    const navigate = useNavigate();
     const [postInputs, setpostInputs ] = useState<SignupInput>({
         name:"",
         email: "",
         password:"",
     })
+
+    async function sendRequest(){
+        try{
+            const response = await axios.post(`${BACKEND_URL}/api/v1/user/${type==='signup' ? 'signup' : 'signin'}`, postInputs)
+            const jwt = response.data
+            localStorage.setItem("Token: ",jwt)
+            navigate("/blogs");
+        }
+        catch{
+            alert("Something went wrong");
+        }
+        
+    }
 
     return (
         <div className="bg-gray-100 h-screen flex flex-col justify-center">
@@ -25,12 +40,13 @@ export const Auth = ({type}: {type: "signup" | "signin"}) => {
                         to={type==="signup"? "/signin" :"/signup"}>{type==='signup' ? "Signin" : "Signup"}</Link> 
                     </div>
                     <div className="pt-4 space-y-5 flex flex-col items-center justify-center">
-                        <LabelledInput label="Name" placeholder="Enter your name ex: Swapnil Hajare" id="name" onChange={(e) =>{
+                        { type==="signup"?
+                            <LabelledInput label="Name (Optional)" placeholder="Enter your name ex: Swapnil Hajare" id="name" onChange={(e) =>{
                            setpostInputs(c => ({
                             ...c, //Give me all the existing keys from here but overwrite name
                             name: e.target.value,
                            }))
-                        }} />
+                        }} />: null}
                         <LabelledInput label="Email" placeholder="Enter your email" id="email" onChange={(e) =>{
                             setpostInputs(c => ({
                                 ...c, //Give me all the existing keys from here but overwrite email
@@ -43,7 +59,7 @@ export const Auth = ({type}: {type: "signup" | "signin"}) => {
                                 password: e.target.value,
                                }))
                          }} />
-                         <button type="button" className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 w-72">{type==='signup' ? 'Sign up' : 'Sign in'}</button>
+                         <button onClick={sendRequest} type="button" className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 w-72">{type==='signup' ? 'Sign up' : 'Sign in'}</button>
                     </div>
                 </div>
             </div>
