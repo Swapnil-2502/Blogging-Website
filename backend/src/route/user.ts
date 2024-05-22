@@ -38,7 +38,8 @@ userRoute.post('/signup',async (c) => {
       });
       const jwt_token = await sign({id: user.id},c.env.JWT_TOKEN)
       return c.json({
-        jwt: jwt_token
+        jwt: jwt_token,
+        message: "You account is sucessfully created"
       })
     }
     catch(e){
