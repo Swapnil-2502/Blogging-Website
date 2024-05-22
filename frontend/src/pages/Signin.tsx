@@ -1,6 +1,19 @@
+import { Quote } from "../components/Quote"
+import { Auth } from "../components/Auth"
 
 export const Signin = () =>{
-    return <div>
-        Signin
-    </div>
+    return (
+        <div>
+            <div className="grid md:grid-cols-2">
+                <div>
+                    <Auth type="signin" />
+                </div>
+                <div className="hidden md:block">
+                     <Quote />
+                </div>
+                
+            </div>
+        </div>
+       
+    )
 }
