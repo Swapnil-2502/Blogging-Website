@@ -8,12 +8,16 @@ export const Blogs = () =>{
     const {loading, blogs} = useBlogs();
 
     if(loading){
-        return <div className="flex flex-col justify-center px-80 pt-20 space-y-10">
+        return <div>
+            <Appbar />
+            <div className="flex flex-col justify-center px-80 pt-10 space-y-10">
                 <Skeleton />
                 <Skeleton />
                 <Skeleton />
                 <Skeleton />
             </div>
+        </div>
+        
         
     }
 

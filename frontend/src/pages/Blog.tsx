@@ -1,3 +1,4 @@
+import { Appbar } from "../components/Appbar";
 import { FullBlog } from "../components/Fullblog";
 import { Spinner } from "../components/Spinner";
 import { useBlog } from "../hooks";
@@ -10,9 +11,13 @@ export const Blog = () =>{
     });
 
     if(loading){
-        return <div className="flex items-center justify-center h-screen">
+        return <div>
+            <Appbar />
+            <div className="flex items-center justify-center h-screen">
             <Spinner />
         </div>
+        </div>
+        
     }
 
     return <div>
