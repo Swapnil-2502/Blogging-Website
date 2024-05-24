@@ -19,30 +19,14 @@ export const Blogs = () =>{
             <div className=" flex justify-center">
                 <div className="justify-center">
                     {blogs.map(blog =>  <BlogCard
-                        authorName={blog.author.name}
+                        id={blog.id}
+                        authorName={blog.author.name || "Anonymous"}
                         title={blog.title}
                         content={blog.content}
                         publishedDate={"23/5/24"}            
                     />)}
                    
-                    {/* <BlogCard
-                        authorName={"Swapnil Hajare"}
-                        title={"Environmental science"}
-                        content={"Environmental science studies the interactions between humans and the environment, encompassing topics such as pollution, conservation, biodiversity, and sustainability."}
-                        publishedDate={"23/5/24"}            
-                    />
-                    <BlogCard
-                        authorName={"Swapnil Hajare"}
-                        title={"Environmental science"}
-                        content={"Environmental science studies the interactions between humans and the environment, encompassing topics such as pollution, conservation, biodiversity, and sustainability."}
-                        publishedDate={"23/5/24"}            
-                    />
-                    <BlogCard
-                        authorName={"Swapnil Hajare"}
-                        title={"Environmental science"}
-                        content={"Environmental science studies the interactions between humans and the environment, encompassing topics such as pollution, conservation, biodiversity, and sustainability."}
-                        publishedDate={"23/5/24"}            
-                    /> */}
+                    
                 </div>
             </div>
         </div>

@@ -1,19 +1,22 @@
+import { Link } from "react-router-dom"
 
 interface BlogCardProps {
     authorName: string,
     title: string,
     content: string,
-    publishedDate: string
+    publishedDate: string,
+    id:string
 }
 
 export const BlogCard = ({
+    id,
     authorName,
     title,
     content,
     publishedDate
 }: BlogCardProps) => {
-    return (
-    <div className="pb-4 p-10">
+    return ( <Link to={`/blog/${id}`}>
+    <div className="pb-4 p-10 cursor-pointer">
         <div className="flex">
             <Avatar name={authorName} /> 
             <div className="flex flex-col justify-center pl-2">
@@ -41,6 +44,7 @@ export const BlogCard = ({
 
         </div>
     </div>
+    </Link>
     )
 }
 
