@@ -1,4 +1,5 @@
 import { FullBlog } from "../components/Fullblog";
+import { Spinner } from "../components/Spinner";
 import { useBlog } from "../hooks";
 import { useParams } from "react-router-dom";
 
@@ -9,11 +10,9 @@ export const Blog = () =>{
     });
 
     if(loading){
-        return (
-            <div>
-                Loading...
-            </div>
-        )
+        return <div className="flex items-center justify-center h-screen">
+            <Spinner />
+        </div>
     }
 
     return <div>
