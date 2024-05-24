@@ -132,8 +132,8 @@ blogRoute.get('/bulk',async (c) => {
     try{
         const blogs = await prisma.blog.findMany({
             select:{
-                content: true,
                 title: true,
+                content: true,
                 id: true,
                 author: {
                     select: {
@@ -143,9 +143,9 @@ blogRoute.get('/bulk',async (c) => {
             }
         })
 
-        return c.json({
+        return c.json(
             blogs
-        })
+        )
         
     }catch(e){
         c.status(411);
