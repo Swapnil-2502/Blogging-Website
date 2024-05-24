@@ -18,15 +18,13 @@ export const Blogs = () =>{
             <Appbar />
             <div className=" flex justify-center">
                 <div className="justify-center">
-                    {blogs.map(blog =>  <BlogCard
+                    {blogs.slice().reverse().map(blog =>  <BlogCard
                         id={blog.id}
                         authorName={blog.author.name || "Anonymous"}
                         title={blog.title}
                         content={blog.content}
                         publishedDate={"23/5/24"}            
                     />)}
-                   
-                    
                 </div>
             </div>
         </div>
